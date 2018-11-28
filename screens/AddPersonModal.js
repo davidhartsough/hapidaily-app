@@ -12,11 +12,6 @@ export default class AddPersonModal extends React.Component {
     nameInput: ''
   };
 
-  _cancel = () => {
-    const { close } = this.props;
-    close();
-  };
-
   _onChangeText = nameInput => this.setState({ nameInput });
 
   _save = () => {
@@ -30,14 +25,14 @@ export default class AddPersonModal extends React.Component {
   };
 
   render() {
-    const { visible } = this.props;
+    const { visible, close } = this.props;
     const { nameInput } = this.state;
     return (
       <Modal
         animationType="slide"
         transparent={false}
         visible={visible}
-        onRequestClose={this._cancel}
+        onRequestClose={close}
         style={styles.modal}
       >
         <View>
@@ -52,7 +47,7 @@ export default class AddPersonModal extends React.Component {
             textContentType="name"
           />
           <Button onPress={this._save} title="Save" />
-          <Button onPress={this._cancel} title="Cancel" />
+          <Button onPress={close} title="Cancel" />
         </View>
       </Modal>
     );

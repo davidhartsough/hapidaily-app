@@ -7,9 +7,9 @@ const getDate = milliseconds => {
   return date.toLocaleDateString();
 };
 
-const ListItem = ({ goal, date }) => (
+const ListItem = ({ impact, date }) => (
   <View>
-    <Text>{goal}</Text>
+    <Text>{impact}</Text>
     <Text>{getDate(date)}</Text>
   </View>
 );
@@ -38,7 +38,7 @@ export default class ImpactsScreen extends React.Component {
 
   _keyExtractor = (item, index) => item.date + index;
 
-  _renderItem = ({ item }) => <ListItem goal={item.goal} date={item.date} />;
+  _renderItem = ({ item }) => <ListItem impact={item.impact} date={item.date} />;
 
   render() {
     const { impacts } = this.state;

@@ -3,13 +3,11 @@ import { Platform } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 import TabBarIcon from '../components/TabBarIcon';
 import GoalsScreen from '../screens/GoalsScreen';
-import CreateGoalScreen from '../screens/CreateGoalScreen';
 import ImpactsScreen from '../screens/ImpactsScreen';
 import PeopleScreen from '../screens/PeopleScreen';
 
 const GoalsStack = createStackNavigator({
-  Goals: GoalsScreen,
-  CreateGoal: CreateGoalScreen
+  Goals: GoalsScreen
 });
 
 GoalsStack.navigationOptions = {

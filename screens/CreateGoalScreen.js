@@ -9,14 +9,10 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class CreateGoalScreen extends React.Component {
-  static navigationOptions = {
-    title: 'Create a goal'
-  };
-
+export default class AddGoalModal extends React.Component {
   state = {
-    goal: '',
-    person: ''
+    goal: 'Bake for someone',
+    person: 'Jimmy James'
   };
 
   _save = () => {
@@ -29,11 +25,15 @@ export default class CreateGoalScreen extends React.Component {
       <View style={styles.container}>
         <View>
           <Text>Choose a goal</Text>
-          <TouchableHighlight onPress={this._openGoalSelect}>{goal}</TouchableHighlight>
+          <TouchableHighlight onPress={this._openGoalSelect}>
+            <Text>{goal}</Text>
+          </TouchableHighlight>
         </View>
         <View>
           <Text>Choose a person</Text>
-          <TouchableHighlight onPress={this._openPersonSelect}>{person}</TouchableHighlight>
+          <TouchableHighlight onPress={this._openPersonSelect}>
+            <Text>{person}</Text>
+          </TouchableHighlight>
         </View>
         <View>
           <Button onPress={this._save} title="Save" />
