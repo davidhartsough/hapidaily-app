@@ -1,6 +1,7 @@
-const tintColor = '#2f95dc';
+const tintColor = '#1997FF';
 
 export default {
+  primaryRGBA: 'rgba(25, 151, 255, 1)',
   tintColor,
   tabIconDefault: '#ccc',
   tabIconSelected: tintColor,
@@ -10,5 +11,5 @@ export default {
   warningBackground: '#EAEB5E',
   warningText: '#666804',
   noticeBackground: tintColor,
-  noticeText: '#fff',
+  noticeText: '#fff'
 };

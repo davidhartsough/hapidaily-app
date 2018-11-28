@@ -1,6 +1,8 @@
 import React from 'react';
-import { ScrollView, StyleSheet, View, Button } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import ActionButton from 'react-native-action-button';
 import store from 'react-native-simple-store';
+import Colors from '../constants/Colors';
 import GoalCard from './GoalCard';
 
 const getEndGoal = item => item.goal.replace('someone', item.person);
@@ -8,20 +10,20 @@ const getEndGoal = item => item.goal.replace('someone', item.person);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#fff'
   },
   contentContainer: {
     // paddingTop: 30,
-  },
+  }
 });
 
 export default class GoalsScreen extends React.Component {
   static navigationOptions = {
-    title: 'Goals',
+    title: 'Goals'
   };
 
   state = {
-    goals: [],
+    goals: []
   };
 
   componentDidMount() {
@@ -53,12 +55,14 @@ export default class GoalsScreen extends React.Component {
     />
   );
 
-  _create = () => {
-    const {
-      navigation: { navigate },
-    } = this.props;
-    navigate('CreateGoal');
-  };
+  // _create = () => {
+  //   const {
+  //     navigation: { navigate }
+  //   } = this.props;
+  //   navigate('CreateGoal');
+  // };
+
+  _openAddGoalModal = () => {};
 
   render() {
     const { goals } = this.state;
@@ -66,12 +70,14 @@ export default class GoalsScreen extends React.Component {
       <View style={styles.container}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
           {goals.map(this._renderGoal)}
-          {goals.length < 3 && (
-            <View>
-              <Button onPress={this._create} title="Create" />
-            </View>
-          )}
         </ScrollView>
+        {goals.length < 3 && (
+          <ActionButton
+            buttonColor={Colors.primaryRGBA}
+            onPress={this._openAddGoalModal}
+            position="center"
+          />
+        )}
       </View>
     );
   }

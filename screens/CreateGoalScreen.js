@@ -5,18 +5,18 @@ import { StyleSheet, View, Text, TouchableHighlight, Button } from 'react-native
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-  },
+    backgroundColor: '#fff'
+  }
 });
 
-export default class CreateGoalModal extends React.Component {
+export default class CreateGoalScreen extends React.Component {
   static navigationOptions = {
-    title: 'Create a goal',
+    title: 'Create a goal'
   };
 
   state = {
     goal: '',
-    person: '',
+    person: ''
   };
 
   _save = () => {

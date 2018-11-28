@@ -3,8 +3,8 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
 const styles = StyleSheet.create({
   listItem: {
-    backgroundColor: '#fff',
-  },
+    backgroundColor: '#fff'
+  }
 });
 
 export default class PersonListItem extends React.PureComponent {

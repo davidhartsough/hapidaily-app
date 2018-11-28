@@ -3,8 +3,8 @@ import { StyleSheet, Text, View, Button } from 'react-native';
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: '#fff',
-  },
+    backgroundColor: '#fff'
+  }
 });
 
 export default class GoalCard extends React.PureComponent {

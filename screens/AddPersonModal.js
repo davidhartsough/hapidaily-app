@@ -7,11 +7,10 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class EditPersonModal extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { nameInput: props.name };
-  }
+export default class AddPersonModal extends React.Component {
+  state = {
+    nameInput: ''
+  };
 
   _cancel = () => {
     const { close } = this.props;
@@ -20,15 +19,10 @@ export default class EditPersonModal extends React.Component {
 
   _onChangeText = nameInput => this.setState({ nameInput });
 
-  _delete = () => {
-    const { deletePerson } = this.props;
-    deletePerson();
-  };
-
   _save = () => {
-    const { close, save, name } = this.props;
+    const { save, close } = this.props;
     const { nameInput } = this.state;
-    if (name !== nameInput) {
+    if (nameInput.length > 0) {
       save(nameInput);
     } else {
       close();
@@ -58,7 +52,6 @@ export default class EditPersonModal extends React.Component {
             textContentType="name"
           />
           <Button onPress={this._save} title="Save" />
-          <Button onPress={this._delete} title="Delete" />
           <Button onPress={this._cancel} title="Cancel" />
         </View>
       </Modal>

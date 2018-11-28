@@ -17,13 +17,13 @@ const ListItem = ({ goal, date }) => (
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-  },
+    backgroundColor: '#fff'
+  }
 });
 
 export default class ImpactsScreen extends React.Component {
   static navigationOptions = {
-    title: 'Impacts',
+    title: 'Impacts'
   };
 
   state = { impacts: [] };
