@@ -2,10 +2,14 @@ import React from 'react';
 import { StyleSheet, Text, View, FlatList } from 'react-native';
 import store from 'react-native-simple-store';
 
-const getDate = milliseconds => {
-  const date = new Date(milliseconds);
-  return date.toLocaleDateString();
-};
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff'
+  }
+});
+
+const getDate = milliseconds => new Date(milliseconds).toLocaleDateString();
 
 const ListItem = ({ impact, date }) => (
   <View>
@@ -13,13 +17,6 @@ const ListItem = ({ impact, date }) => (
     <Text>{getDate(date)}</Text>
   </View>
 );
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff'
-  }
-});
 
 export default class ImpactsScreen extends React.Component {
   static navigationOptions = {
@@ -30,7 +27,7 @@ export default class ImpactsScreen extends React.Component {
 
   componentDidMount() {
     store.get('impacts').then(impacts => {
-      if (impacts) {
+      if (impacts && impacts.length) {
         this.setState({ impacts });
       }
     });

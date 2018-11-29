@@ -3,22 +3,26 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
 const styles = StyleSheet.create({
   listItem: {
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
+    padding: 8
+  },
+  text: {
+    fontSize: 14
   }
 });
 
-export default class PersonListItem extends React.PureComponent {
+export default class ListItem extends React.PureComponent {
   _onPress = () => {
-    const { onPressItem, index } = this.props;
-    onPressItem(index);
+    const { onPressItem, id } = this.props;
+    onPressItem(id);
   };
 
   render() {
-    const { name } = this.props;
+    const { item } = this.props;
     return (
       <TouchableOpacity onPress={this._onPress}>
         <View style={styles.listItem}>
-          <Text>{name}</Text>
+          <Text style={styles.text}>{item}</Text>
         </View>
       </TouchableOpacity>
     );

@@ -1,22 +1,40 @@
 import React from 'react';
 import { StyleSheet, View, Text, Modal, TouchableHighlight, Button } from 'react-native';
 import store from 'react-native-simple-store';
-import Goals from '../constants/goals';
-import SelectGoalModal from './SelectGoalModal';
-import SelectPersonModal from './SelectPersonModal';
+import goals from '../../constants/goals';
+import SelectModal from '../../components/SelectModal';
 
 const getRandomItem = array => array[Math.floor(Math.random() * array.length)];
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  modal: {
     backgroundColor: '#fff'
+  },
+  view: {
+    padding: 16,
+    paddingTop: 64
+  },
+  label: {
+    fontSize: 16,
+    marginTop: 8,
+    marginBottom: 8
+  },
+  select: {
+    fontSize: 14,
+    marginTop: 8,
+    marginBottom: 8,
+    padding: 4,
+    border: '1px solid #000'
+  },
+  button: {
+    margin: 4,
+    marginTop: 12
   }
 });
 
 export default class AddGoalModal extends React.Component {
   state = {
-    goal: getRandomItem(Goals),
+    goal: getRandomItem(goals),
     person: '',
     people: [],
     goalModalVisible: false,
@@ -25,7 +43,7 @@ export default class AddGoalModal extends React.Component {
 
   componentDidMount() {
     store.get('people').then(people => {
-      if (people) {
+      if (people && people.length) {
         this.setState({
           people,
           person: getRandomItem(people)
@@ -75,33 +93,35 @@ export default class AddGoalModal extends React.Component {
         onRequestClose={close}
         style={styles.modal}
       >
-        <SelectGoalModal
+        <SelectModal
           visible={goalModalVisible}
           close={this._closeGoalSelect}
           select={this._selectGoal}
-          goals={Goals}
+          data={goals}
+          name="goal"
         />
-        <SelectPersonModal
+        <SelectModal
           visible={personModalVisible}
           close={this._closePersonSelect}
           select={this._selectPerson}
-          people={people}
+          data={people}
+          name="person"
         />
-        <View>
-          <Text>Choose a goal</Text>
+        <View style={styles.view}>
+          <Text style={styles.label}>Choose a goal</Text>
           <TouchableHighlight onPress={this._openGoalSelect}>
-            <Text>{goal}</Text>
+            <Text style={styles.select}>{goal}</Text>
           </TouchableHighlight>
         </View>
         <View>
-          <Text>Choose a person</Text>
+          <Text style={styles.label}>Choose a person</Text>
           <TouchableHighlight onPress={this._openPersonSelect}>
-            <Text>{person}</Text>
+            <Text style={styles.select}>{person}</Text>
           </TouchableHighlight>
         </View>
         <View>
-          <Button onPress={this._save} title="Save" />
-          <Button onPress={close} title="Cancel" />
+          <Button onPress={this._save} title="Save" style={styles.button} />
+          <Button onPress={close} title="Cancel" style={styles.button} />
         </View>
       </Modal>
     );

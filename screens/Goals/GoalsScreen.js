@@ -2,7 +2,7 @@ import React from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import ActionButton from 'react-native-action-button';
 import store from 'react-native-simple-store';
-import Colors from '../constants/Colors';
+import Colors from '../../constants/Colors';
 import GoalCard from './GoalCard';
 import AddGoalModal from './AddGoalModal';
 
@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff'
   },
   contentContainer: {
-    // paddingTop: 30,
+    paddingTop: 16
   }
 });
 
@@ -34,10 +34,15 @@ export default class GoalsScreen extends React.Component {
 
   _fetchGoals = () => {
     store.get('goals').then(goals => {
-      if (goals) {
+      if (goals && goals.length) {
         this.setState({ goals });
       }
     });
+  };
+
+  _updateStore = () => {
+    const { goals } = this.state;
+    store.save('goals', goals);
   };
 
   _clearGoal = index => {
@@ -47,9 +52,7 @@ export default class GoalsScreen extends React.Component {
       return {
         goals
       };
-    }).then(state => {
-      store.save('goals', state.goals);
-    });
+    }, this._updateStore);
   };
 
   _complete = index => {
@@ -66,13 +69,6 @@ export default class GoalsScreen extends React.Component {
     const { goals } = this.state;
     console.log(goals[index]);
   };
-
-  // _create = () => {
-  //   const {
-  //     navigation: { navigate }
-  //   } = this.props;
-  //   navigate('CreateGoal');
-  // };
 
   _openAddModal = () => {
     this.setState({ addModalVisible: true });

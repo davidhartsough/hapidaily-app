@@ -2,10 +2,9 @@ import React from 'react';
 import { StyleSheet, View, Text, FlatList } from 'react-native';
 import ActionButton from 'react-native-action-button';
 import store from 'react-native-simple-store';
-import Colors from '../constants/Colors';
-import PersonListItem from './PersonListItem';
-import EditPersonModal from './EditPersonModal';
-import AddPersonModal from './AddPersonModal';
+import Colors from '../../constants/Colors';
+import ListItem from '../../components/ListItem';
+import PersonModal from './PersonModal';
 
 const styles = StyleSheet.create({
   container: {
@@ -32,7 +31,7 @@ export default class PeopleScreen extends React.Component {
 
   componentDidMount() {
     store.get('people').then(people => {
-      if (people) {
+      if (people && people.length) {
         this.setState({ people });
       }
     });
@@ -40,6 +39,11 @@ export default class PeopleScreen extends React.Component {
 
   _closeEditModal = () => {
     this.setState({ editModalVisible: false });
+  };
+
+  _updateStore = () => {
+    const { people } = this.state;
+    store.save('people', people);
   };
 
   _delete = () => {
@@ -50,9 +54,7 @@ export default class PeopleScreen extends React.Component {
         editModalVisible: false,
         people
       };
-    }).then(state => {
-      store.save('people', state.people);
-    });
+    }, this._updateStore);
   };
 
   _save = name => {
@@ -63,9 +65,7 @@ export default class PeopleScreen extends React.Component {
         editModalVisible: false,
         people
       };
-    }).then(state => {
-      store.save('people', state.people);
-    });
+    }, this._updateStore);
   };
 
   _keyExtractor = (item, index) => item + index;
@@ -78,8 +78,8 @@ export default class PeopleScreen extends React.Component {
     }));
   };
 
-  _renderItem = ({ name, index }) => (
-    <PersonListItem index={index} name={name} onPressItem={this._onPressItem} />
+  _renderItem = ({ item, index }) => (
+    <ListItem id={index} item={item} onPressItem={this._onPressItem} />
   );
 
   _openAddPersonModal = () => {
@@ -106,23 +106,27 @@ export default class PeopleScreen extends React.Component {
     const { addModalVisible, editModalVisible, people, selectedPersonName } = this.state;
     return (
       <View style={styles.container}>
-        <AddPersonModal
+        <PersonModal
           visible={addModalVisible}
           save={this._addNewPerson}
           close={this._closeAddPersonModal}
+          name=""
+          title="Add"
+          deletePerson={false}
         />
-        <EditPersonModal
+        <PersonModal
           visible={editModalVisible}
-          deletePerson={this._delete}
           save={this._save}
-          name={selectedPersonName}
           close={this._closeModal}
+          name={selectedPersonName}
+          title="Edit"
+          deletePerson={this._delete}
         />
         {people.length ? (
           <FlatList data={people} renderItem={this._renderItem} keyExtractor={this._keyExtractor} />
         ) : (
           <View>
-            <Text>Got nothing yet hombre</Text>
+            <Text>TODO: Import Contacts</Text>
           </View>
         )}
         <ActionButton
