@@ -39,16 +39,14 @@ export default class ImpactsScreen extends React.Component {
 
   render() {
     const { impacts } = this.state;
-    if (!impacts.length) {
-      return (
-        <View style={styles.container}>
-          <Text>Got nothing yet mate</Text>
-        </View>
-      );
-    }
     return (
       <View style={styles.container}>
-        <FlatList data={impacts} renderItem={this._renderItem} keyExtractor={this._keyExtractor} />
+        <FlatList
+          data={impacts}
+          renderItem={this._renderItem}
+          keyExtractor={this._keyExtractor}
+          ListEmptyComponent={<Text>Got nothing yet mate</Text>}
+        />
       </View>
     );
   }

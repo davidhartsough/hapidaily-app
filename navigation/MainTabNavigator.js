@@ -2,9 +2,9 @@ import React from 'react';
 import { Platform } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 import TabBarIcon from '../components/TabBarIcon';
-import GoalsScreen from '../screens/GoalsScreen';
-import ImpactsScreen from '../screens/ImpactsScreen';
-import PeopleScreen from '../screens/PeopleScreen';
+import GoalsScreen from '../screens/Goals/GoalsScreen';
+import ImpactsScreen from '../screens/Impacts/ImpactsScreen';
+import PeopleScreen from '../screens/People/PeopleScreen';
 
 const GoalsStack = createStackNavigator({
   Goals: GoalsScreen

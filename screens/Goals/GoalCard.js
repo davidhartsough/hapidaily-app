@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Button } from 'react-native';
 
 const styles = StyleSheet.create({
   card: {
+    flex: 1,
     backgroundColor: '#fff',
     margin: 8,
     padding: 12,
@@ -42,8 +43,12 @@ export default class GoalCard extends React.PureComponent {
       <View style={styles.card}>
         <Text style={styles.text}>{endGoal}</Text>
         <View style={styles.actions}>
-          <Button onPress={this._complete} title="Mark as done" style={styles.button} />
-          <Button onPress={this._edit} title="Edit" style={styles.button} />
+          <View style={styles.button}>
+            <Button onPress={this._complete} title="Mark as done" />
+          </View>
+          <View style={styles.button}>
+            <Button onPress={this._edit} title="Edit" />
+          </View>
         </View>
       </View>
     );

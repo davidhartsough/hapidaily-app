@@ -122,13 +122,12 @@ export default class PeopleScreen extends React.Component {
           title="Edit"
           deletePerson={this._delete}
         />
-        {people.length ? (
-          <FlatList data={people} renderItem={this._renderItem} keyExtractor={this._keyExtractor} />
-        ) : (
-          <View>
-            <Text>TODO: Import Contacts</Text>
-          </View>
-        )}
+        <FlatList
+          data={people}
+          renderItem={this._renderItem}
+          keyExtractor={this._keyExtractor}
+          ListEmptyComponent={<Text>TODO: Import Contacts</Text>}
+        />
         <ActionButton
           buttonColor={Colors.primaryRGBA}
           onPress={this._openAddPersonModal}

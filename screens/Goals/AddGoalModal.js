@@ -7,10 +7,8 @@ import SelectModal from '../../components/SelectModal';
 const getRandomItem = array => array[Math.floor(Math.random() * array.length)];
 
 const styles = StyleSheet.create({
-  modal: {
-    backgroundColor: '#fff'
-  },
   view: {
+    flex: 1,
     padding: 16,
     paddingTop: 64
   },
@@ -26,7 +24,12 @@ const styles = StyleSheet.create({
     padding: 4,
     border: '1px solid #000'
   },
+  actions: {
+    flex: 1,
+    flexDirection: 'row'
+  },
   button: {
+    flex: 1,
     margin: 4,
     marginTop: 12
   }
@@ -86,13 +89,7 @@ export default class AddGoalModal extends React.Component {
     const { visible, close } = this.props;
     const { goal, person, goalModalVisible, personModalVisible, people } = this.state;
     return (
-      <Modal
-        animationType="slide"
-        transparent={false}
-        visible={visible}
-        onRequestClose={close}
-        style={styles.modal}
-      >
+      <Modal animationType="slide" transparent={false} visible={visible} onRequestClose={close}>
         <SelectModal
           visible={goalModalVisible}
           close={this._closeGoalSelect}
@@ -119,9 +116,13 @@ export default class AddGoalModal extends React.Component {
             <Text style={styles.select}>{person}</Text>
           </TouchableHighlight>
         </View>
-        <View>
-          <Button onPress={this._save} title="Save" style={styles.button} />
-          <Button onPress={close} title="Cancel" style={styles.button} />
+        <View style={styles.actions}>
+          <View style={styles.button}>
+            <Button onPress={this._save} title="Save" />
+          </View>
+          <View style={styles.button}>
+            <Button onPress={close} title="Cancel" />
+          </View>
         </View>
       </Modal>
     );

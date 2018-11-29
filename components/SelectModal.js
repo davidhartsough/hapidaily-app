@@ -1,11 +1,9 @@
 import React from 'react';
 import { StyleSheet, View, TextInput, Modal, FlatList, Text } from 'react-native';
 import ListItem from './ListItem';
+import Colors from '../constants/Colors';
 
 const styles = StyleSheet.create({
-  modal: {
-    backgroundColor: '#fff'
-  },
   view: {
     padding: 16,
     paddingTop: 64
@@ -39,13 +37,7 @@ export default class SelectModal extends React.Component {
     const { visible, close, data, name } = this.props;
     const { searchInput } = this.state;
     return (
-      <Modal
-        animationType="slide"
-        transparent={false}
-        visible={visible}
-        onRequestClose={close}
-        style={styles.modal}
-      >
+      <Modal animationType="slide" transparent={false} visible={visible} onRequestClose={close}>
         <View style={styles.view}>
           <Text style={styles.title}>{`Select a ${name}`}</Text>
           <TextInput
@@ -54,6 +46,7 @@ export default class SelectModal extends React.Component {
             value={searchInput}
             placeholder="Search"
             returnKeyType="search"
+            underlineColorAndroid={Colors.tintColor}
           />
           <FlatList data={data} renderItem={this._renderItem} keyExtractor={this._keyExtractor} />
         </View>

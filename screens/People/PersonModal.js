@@ -1,11 +1,10 @@
 import React from 'react';
 import { StyleSheet, View, TextInput, Modal, Button, Text } from 'react-native';
+import Colors from '../../constants/Colors';
 
 const styles = StyleSheet.create({
-  modal: {
-    backgroundColor: '#fff'
-  },
   view: {
+    flex: 1,
     padding: 16,
     paddingTop: 64
   },
@@ -13,6 +12,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginTop: 8,
     marginBottom: 8
+  },
+  actions: {
+    flex: 1
   },
   button: {
     margin: 4,
@@ -42,13 +44,7 @@ export default class PersonModal extends React.Component {
     const { visible, close, title, deletePerson } = this.props;
     const { nameInput } = this.state;
     return (
-      <Modal
-        animationType="slide"
-        transparent={false}
-        visible={visible}
-        onRequestClose={close}
-        style={styles.modal}
-      >
+      <Modal animationType="slide" transparent={false} visible={visible} onRequestClose={close}>
         <View style={styles.view}>
           <Text style={styles.title}>{title}</Text>
           <TextInput
@@ -60,10 +56,21 @@ export default class PersonModal extends React.Component {
             placeholder="Name"
             returnKeyType="done"
             textContentType="name"
+            underlineColorAndroid={Colors.tintColor}
           />
-          <Button onPress={this._save} title="Save" style={styles.button} />
-          {!!deletePerson && <Button onPress={deletePerson} title="Delete" style={styles.button} />}
-          <Button onPress={close} title="Cancel" style={styles.button} />
+          <View style={styles.actions}>
+            <View style={styles.button}>
+              <Button onPress={this._save} title="Save" />
+            </View>
+            {!!deletePerson && (
+              <View style={styles.button}>
+                <Button onPress={deletePerson} title="Delete" />
+              </View>
+            )}
+            <View style={styles.button}>
+              <Button onPress={close} title="Cancel" />
+            </View>
+          </View>
         </View>
       </Modal>
     );
