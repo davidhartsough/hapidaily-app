@@ -1,15 +1,12 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import { Button, Card } from 'react-native-elements';
 
 const styles = StyleSheet.create({
-  card: {
-    flex: 1,
-    backgroundColor: '#fff',
-    margin: 8,
-    padding: 12,
-    boxShadow:
-      '0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12)'
-  },
+  // card: {
+  //   margin: 8,
+  //   padding: 12
+  // },
   text: {
     fontSize: 14,
     marginTop: 8,
@@ -40,7 +37,7 @@ export default class GoalCard extends React.PureComponent {
   render() {
     const { endGoal } = this.props;
     return (
-      <View style={styles.card}>
+      <Card>
         <Text style={styles.text}>{endGoal}</Text>
         <View style={styles.actions}>
           <View style={styles.button}>
@@ -50,7 +47,7 @@ export default class GoalCard extends React.PureComponent {
             <Button onPress={this._edit} title="Edit" />
           </View>
         </View>
-      </View>
+      </Card>
     );
   }
 }

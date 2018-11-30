@@ -1,7 +1,7 @@
 import React from 'react';
-import { StyleSheet, View, TextInput, Modal, FlatList, Text } from 'react-native';
+import { StyleSheet, View, Modal, FlatList, Text } from 'react-native';
+import { SearchBar } from 'react-native-elements';
 import ListItem from './ListItem';
-import Colors from '../constants/Colors';
 
 const styles = StyleSheet.create({
   view: {
@@ -22,7 +22,12 @@ export default class SelectModal extends React.Component {
 
   _onChangeText = searchInput => this.setState({ searchInput });
 
-  _search = () => {};
+  _onClearText = () => this.setState({ searchInput: '' });
+
+  _filter = data => data.filter(item => {
+    const { searchInput } = this.state;
+    return item.toUpperCase().includes(searchInput.toUpperCase());
+  });
 
   _onPressItem = selection => {
     const { select } = this.props;
@@ -31,7 +36,7 @@ export default class SelectModal extends React.Component {
 
   _keyExtractor = (item, index) => item + index;
 
-  _renderItem = ({ item }) => <ListItem index={item} name={item} onPressItem={this._onPressItem} />;
+  _renderItem = ({ item }) => <ListItem id={item} item={item} onPressItem={this._onPressItem} />;
 
   render() {
     const { visible, close, data, name } = this.props;
@@ -40,15 +45,19 @@ export default class SelectModal extends React.Component {
       <Modal animationType="slide" transparent={false} visible={visible} onRequestClose={close}>
         <View style={styles.view}>
           <Text style={styles.title}>{`Select a ${name}`}</Text>
-          <TextInput
+          <SearchBar
+            lightTheme
             onChangeText={this._onChangeText}
-            onSubmitEditing={this._search}
+            onClearText={this._onClearText}
             value={searchInput}
             placeholder="Search"
             returnKeyType="search"
-            underlineColorAndroid={Colors.tintColor}
           />
-          <FlatList data={data} renderItem={this._renderItem} keyExtractor={this._keyExtractor} />
+          <FlatList
+            data={this._filter(data)}
+            renderItem={this._renderItem}
+            keyExtractor={this._keyExtractor}
+          />
         </View>
       </Modal>
     );

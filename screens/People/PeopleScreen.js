@@ -117,7 +117,7 @@ export default class PeopleScreen extends React.Component {
         <PersonModal
           visible={editModalVisible}
           save={this._save}
-          close={this._closeModal}
+          close={this._closeEditModal}
           name={selectedPersonName}
           title="Edit"
           deletePerson={this._delete}

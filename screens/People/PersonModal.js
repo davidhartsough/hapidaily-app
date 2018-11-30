@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet, View, TextInput, Modal, Button, Text } from 'react-native';
-import Colors from '../../constants/Colors';
+import { StyleSheet, View, Modal, Text } from 'react-native';
+import { FormLabel, FormInput, FormValidationMessage, Button } from 'react-native-elements';
 
 const styles = StyleSheet.create({
   view: {
@@ -23,44 +23,55 @@ const styles = StyleSheet.create({
 });
 
 export default class PersonModal extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { nameInput: props.name };
-  }
+  state = { nameInput: '', errorMessage: '', saveDisabled: false };
 
-  _onChangeText = nameInput => this.setState({ nameInput });
+  _updateState = () => {
+    const { name } = this.props;
+    this.setState({ nameInput: name });
+  };
+
+  _onChangeText = nameInput => {
+    const errorMessage = nameInput.length === 0 ? 'Please enter a name' : '';
+    const saveDisabled = nameInput.length === 0;
+    this.setState({ nameInput, errorMessage, saveDisabled });
+  };
 
   _save = () => {
-    const { save, close, name } = this.props;
+    const { save, name } = this.props;
     const { nameInput } = this.state;
     if (name !== nameInput && nameInput.length > 0) {
       save(nameInput);
-    } else {
-      close();
     }
   };
 
   render() {
     const { visible, close, title, deletePerson } = this.props;
-    const { nameInput } = this.state;
+    const { nameInput, errorMessage, saveDisabled } = this.state;
     return (
-      <Modal animationType="slide" transparent={false} visible={visible} onRequestClose={close}>
+      <Modal
+        animationType="slide"
+        transparent={false}
+        visible={visible}
+        onRequestClose={close}
+        onShow={this._updateState}
+      >
         <View style={styles.view}>
           <Text style={styles.title}>{title}</Text>
-          <TextInput
+          <FormLabel>Name</FormLabel>
+          <FormInput
             onChangeText={this._onChangeText}
             onSubmitEditing={this._save}
             value={nameInput}
-            autoCapitalize
+            autoCapitalize="words"
             maxLength={100}
             placeholder="Name"
             returnKeyType="done"
             textContentType="name"
-            underlineColorAndroid={Colors.tintColor}
           />
+          <FormValidationMessage>{errorMessage}</FormValidationMessage>
           <View style={styles.actions}>
             <View style={styles.button}>
-              <Button onPress={this._save} title="Save" />
+              <Button onPress={this._save} disabled={saveDisabled} title="Save" />
             </View>
             {!!deletePerson && (
               <View style={styles.button}>
