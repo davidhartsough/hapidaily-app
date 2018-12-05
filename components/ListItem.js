@@ -4,10 +4,10 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 const styles = StyleSheet.create({
   listItem: {
     backgroundColor: '#fff',
-    padding: 8
+    padding: 16
   },
   text: {
-    fontSize: 14
+    fontSize: 16
   }
 });
 

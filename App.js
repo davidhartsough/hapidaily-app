@@ -1,13 +1,14 @@
 import React from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Font, Icon } from 'expo';
+import DataProvider from './store';
 import AppNavigator from './navigation/AppNavigator';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-  },
+    backgroundColor: '#fff'
+  }
 });
 
 export default class App extends React.Component {
@@ -15,8 +16,8 @@ export default class App extends React.Component {
 
   _loadResourcesAsync = async () => Promise.all([
     Font.loadAsync({
-      ...Icon.Ionicons.font,
-    }),
+      ...Icon.Ionicons.font
+    })
   ]);
 
   _handleLoadingError = error => {
@@ -28,7 +29,9 @@ export default class App extends React.Component {
   };
 
   render() {
-    if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
+    const { skipLoadingScreen } = this.props;
+    const { isLoadingComplete } = this.state;
+    if (!isLoadingComplete && !skipLoadingScreen) {
       return (
         <AppLoading
           startAsync={this._loadResourcesAsync}
@@ -38,10 +41,12 @@ export default class App extends React.Component {
       );
     }
     return (
-      <View style={styles.container}>
-        {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-        <AppNavigator />
-      </View>
+      <DataProvider>
+        <View style={styles.container}>
+          {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+          <AppNavigator />
+        </View>
+      </DataProvider>
     );
   }
 }

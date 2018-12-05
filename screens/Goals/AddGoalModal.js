@@ -1,9 +1,20 @@
 import React from 'react';
 import { StyleSheet, View, Text, Modal, TouchableHighlight } from 'react-native';
 import { Button } from 'react-native-elements';
-import store from 'react-native-simple-store';
-import goals from '../../constants/goals';
+import GoalList from '../../constants/goals';
+import Colors from '../../constants/Colors';
 import SelectModal from '../../components/SelectModal';
+
+const shuffleArray = array => {
+  const shuffledArray = [...array];
+  for (let i = shuffledArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+  }
+  return shuffledArray;
+};
+
+const goals = shuffleArray(GoalList);
 
 const getRandomItem = array => array[Math.floor(Math.random() * array.length)];
 
@@ -11,30 +22,49 @@ const styles = StyleSheet.create({
   view: {
     flex: 1,
     padding: 16,
-    paddingTop: 64
+    paddingTop: 0
   },
   label: {
-    fontSize: 16,
-    marginTop: 8,
-    marginBottom: 8
+    fontSize: 18,
+    marginBottom: 8,
+    marginTop: 16
   },
   select: {
-    fontSize: 14,
-    marginTop: 8,
-    marginBottom: 8,
-    padding: 4,
+    fontSize: 16,
+    padding: 8,
+    backgroundColor: '#f5f5f5',
     borderColor: '#ccc',
     borderWidth: 1,
-    borderStyle: 'solid'
+    borderStyle: 'solid',
+    borderRadius: 2
   },
   actions: {
+    marginTop: 24,
     flex: 1,
     flexDirection: 'row'
   },
-  button: {
+  buttonViewLeft: {
     flex: 1,
-    margin: 4,
-    marginTop: 12
+    marginRight: 8
+  },
+  buttonViewRight: {
+    flex: 1,
+    marginLeft: 8
+  },
+  buttonContainer: {
+    marginTop: 0,
+    marginBottom: 0,
+    marginLeft: 0,
+    marginRight: 0
+  },
+  button: {
+    marginTop: 0,
+    marginBottom: 0,
+    marginLeft: 0,
+    marginRight: 0
+  },
+  buttonText: {
+    letterSpacing: 0.5
   }
 });
 
@@ -42,23 +72,19 @@ export default class AddGoalModal extends React.Component {
   state = {
     goal: getRandomItem(goals),
     person: 'someone',
-    people: ['someone'],
     goalModalVisible: false,
     personModalVisible: false
   };
 
   componentDidMount() {
-    this._fetchPeople();
+    this._loadModal();
   }
 
-  _fetchPeople = () => {
-    store.get('people').then(people => {
-      if (people && people.length) {
-        this.setState({
-          people,
-          person: getRandomItem(people)
-        });
-      }
+  _loadModal = () => {
+    const { people } = this.props;
+    this.setState({
+      goal: getRandomItem(goals),
+      person: people.length ? getRandomItem(people) : 'someone'
     });
   };
 
@@ -99,15 +125,15 @@ export default class AddGoalModal extends React.Component {
   };
 
   render() {
-    const { visible, close } = this.props;
-    const { goal, person, goalModalVisible, personModalVisible, people } = this.state;
+    const { visible, close, people } = this.props;
+    const { goal, person, goalModalVisible, personModalVisible } = this.state;
     return (
       <Modal
         animationType="slide"
         transparent={false}
         visible={visible}
         onRequestClose={close}
-        onShow={this._fetchPeople}
+        onShow={this._loadModal}
       >
         <View style={styles.view}>
           <SelectModal
@@ -137,11 +163,32 @@ export default class AddGoalModal extends React.Component {
             </TouchableHighlight>
           </View>
           <View style={styles.actions}>
-            <View style={styles.button}>
-              <Button onPress={this._save} title="Save" />
+            <View style={styles.buttonViewLeft}>
+              <Button
+                onPress={this._save}
+                title="SAVE"
+                backgroundColor={Colors.tintColor}
+                borderRadius={2}
+                buttonStyle={styles.button}
+                containerViewStyle={styles.buttonContainer}
+                fontSize={14}
+                fontWeight="500"
+                textStyle={styles.buttonText}
+              />
             </View>
-            <View style={styles.button}>
-              <Button onPress={close} title="Cancel" />
+            <View style={styles.buttonViewRight}>
+              <Button
+                onPress={close}
+                title="CANCEL"
+                backgroundColor="#e0e0e0"
+                color="rgba(0, 0, 0, 0.87)"
+                borderRadius={2}
+                buttonStyle={styles.button}
+                containerViewStyle={styles.buttonContainer}
+                fontSize={14}
+                fontWeight="500"
+                textStyle={styles.buttonText}
+              />
             </View>
           </View>
         </View>

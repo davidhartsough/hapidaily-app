@@ -1,72 +1,38 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import ActionButton from 'react-native-action-button';
-import store from 'react-native-simple-store';
 import Colors from '../../constants/Colors';
 import GoalCard from './GoalCard';
 import AddGoalModal from './AddGoalModal';
+import { createGoal, updateGoal, deleteGoal, createImpact } from '../../store/actions';
 
 const getEndGoal = item => item.goal.replace('someone', item.person);
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff'
-  },
-  contentContainer: {
-    paddingTop: 16
+    backgroundColor: '#eee'
   }
 });
 
-export default class GoalsScreen extends React.Component {
+class GoalsScreen extends React.Component {
   static navigationOptions = {
     title: 'Goals'
   };
 
   state = {
-    goals: [],
     addModalVisible: false
   };
 
-  componentDidMount() {
-    this._fetchGoals();
-  }
-
-  _fetchGoals = () => {
-    store.get('goals').then(goals => {
-      if (goals && goals.length) {
-        this.setState({ goals });
-      }
-    });
-  };
-
-  _updateStore = () => {
-    const { goals } = this.state;
-    store.save('goals', goals);
-  };
-
-  _clearGoal = index => {
-    this.setState(state => {
-      const { goals } = state;
-      goals.splice(index, 1);
-      return {
-        goals
-      };
-    }, this._updateStore);
-  };
-
   _complete = index => {
-    const { goals } = this.state;
-    const newImpact = {
-      impact: getEndGoal(goals[index]),
-      date: Date.now()
-    };
-    this._clearGoal(index);
-    store.push('impacts', newImpact);
+    const { goals } = this.props;
+    this.props.createImpact(getEndGoal(goals[index]));
+    this.props.deleteGoal(index);
   };
 
   _edit = index => {
-    const { goals } = this.state;
+    const { goals } = this.props;
     console.log(goals[index]);
   };
 
@@ -79,28 +45,22 @@ export default class GoalsScreen extends React.Component {
   };
 
   _addNewGoal = (goal, person) => {
-    const newGoal = { goal, person };
-    this.setState(state => {
-      const { goals } = state;
-      goals.push(newGoal);
-      return {
-        goals,
-        addModalVisible: false
-      };
-    });
-    store.push('goals', newGoal);
+    this.props.createGoal(goal, person);
+    this.setState({ addModalVisible: false });
   };
 
   render() {
-    const { goals, addModalVisible } = this.state;
+    const { goals, people } = this.props;
+    const { addModalVisible } = this.state;
     return (
       <View style={styles.container}>
         <AddGoalModal
+          people={people}
           visible={addModalVisible}
           save={this._addNewGoal}
           close={this._closeAddModal}
         />
-        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+        <ScrollView style={styles.container}>
           {goals.map((item, index) => (
             <GoalCard
               key={item.goal + item.person + index}
@@ -122,3 +82,11 @@ export default class GoalsScreen extends React.Component {
     );
   }
 }
+
+const mapStateToProps = ({ goals, people }) => ({ goals, people });
+const mapDispatchToProps = { createGoal, updateGoal, deleteGoal, createImpact };
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(GoalsScreen);
