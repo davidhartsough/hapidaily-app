@@ -4,7 +4,7 @@ export default (state = [], action) => {
   const people = [...state];
   switch (action.type) {
     case 'RECEIVE_PEOPLE':
-      return action.people;
+      return action.people && action.people.length ? action.people : [];
     case 'IMPORT_PEOPLE':
       store.save('people', action.people);
       return action.people;

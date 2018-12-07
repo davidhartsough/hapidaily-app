@@ -1,14 +1,19 @@
 {
   "expo": {
     "name": "HapiDaily",
-    "description": "Have a positive impact daily.",
+    "description": "have a positive impact daily",
     "slug": "hapidaily",
     "privacy": "public",
     "sdkVersion": "31.0.0",
-    "platforms": ["ios", "android"],
-    "version": "1.0.0",
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "version": "0.1.0",
+    "githubUrl": "https://github.com/davidhartsough/hapidaily-app",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "primaryColor": "#1997FF",
+    "icon": "./assets/images/hapidaily-ios-icon.png",
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
@@ -17,9 +22,22 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
+      "bundleIdentifier": "com.davidhartsough.hapidaily",
+      "buildNumber": "0.1.0",
+      "icon": "./assets/images/hapidaily-ios-icon.png",
       "supportsTablet": true
+    },
+    "android": {
+      "package": "com.davidhartsough.hapidaily",
+      "versionCode": 1,
+      "icon": "./assets/images/hapidaily-android-icon.png",
+      "permissions": [
+        "READ_CONTACTS"
+      ]
     }
   }
 }

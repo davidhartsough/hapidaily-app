@@ -2,13 +2,11 @@ import React from 'react';
 import { Platform } from 'react-native';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 import TabBarIcon from '../components/TabBarIcon';
-import GoalsScreen from '../screens/Goals';
-import ImpactsScreen from '../screens/Impacts';
-import PeopleScreen from '../screens/People';
+import Goals from '../screens/Goals';
+import Impacts from '../screens/Impacts';
+import People from '../screens/People';
 
-const GoalsStack = createStackNavigator({
-  Goals: GoalsScreen
-});
+const GoalsStack = createStackNavigator({ Goals });
 
 GoalsStack.navigationOptions = {
   tabBarLabel: 'Goals',
@@ -20,9 +18,7 @@ GoalsStack.navigationOptions = {
   )
 };
 
-const ImpactsStack = createStackNavigator({
-  Impacts: ImpactsScreen
-});
+const ImpactsStack = createStackNavigator({ Impacts });
 
 ImpactsStack.navigationOptions = {
   tabBarLabel: 'Impacts',
@@ -34,9 +30,7 @@ ImpactsStack.navigationOptions = {
   )
 };
 
-const PeopleStack = createStackNavigator({
-  People: PeopleScreen
-});
+const PeopleStack = createStackNavigator({ People });
 
 PeopleStack.navigationOptions = {
   tabBarLabel: 'People',

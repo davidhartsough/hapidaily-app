@@ -4,7 +4,7 @@ export default (state = [], action) => {
   const goals = [...state];
   switch (action.type) {
     case 'RECEIVE_GOALS':
-      return action.goals;
+      return action.goals && action.goals.length ? action.goals : [];
     case 'CREATE_GOAL': {
       const newGoal = {
         goal: action.goal,

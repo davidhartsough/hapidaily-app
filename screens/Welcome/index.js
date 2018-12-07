@@ -24,20 +24,19 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: '100',
     textAlign: 'center'
   },
   subtitle: {
     fontSize: 20,
+    fontWeight: '100',
     textAlign: 'center',
     marginBottom: 16
   },
   text: {
     fontSize: 16,
-    marginBottom: 8
-  },
-  bold: {
-    fontWeight: 'bold'
+    marginBottom: 8,
+    textAlign: 'center'
   },
   smallcaps: {
     fontVariant: ['small-caps']
@@ -70,6 +69,7 @@ class WelcomeScreen extends React.Component {
         const people = data.map(person => person.name);
         this.props.importPeople(people);
       }
+      store.save('hasImportedContacts', true);
       this._go();
     });
   };
