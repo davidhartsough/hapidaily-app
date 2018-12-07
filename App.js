@@ -2,7 +2,7 @@ import React from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Font, Icon } from 'expo';
 import DataProvider from './store';
-import AppNavigator from './navigation/AppNavigator';
+import Welcome from './screens/Welcome';
 
 const styles = StyleSheet.create({
   container: {
@@ -44,7 +44,7 @@ export default class App extends React.Component {
       <DataProvider>
         <View style={styles.container}>
           {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-          <AppNavigator />
+          <Welcome />
         </View>
       </DataProvider>
     );

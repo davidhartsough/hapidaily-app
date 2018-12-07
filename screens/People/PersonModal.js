@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Modal, Text } from 'react-native';
-import { FormLabel, FormInput, FormValidationMessage, Button } from 'react-native-elements';
+import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
+import ButtonGroup from '../../components/ButtonGroup';
 import Colors from '../../constants/Colors';
 
 const styles = StyleSheet.create({
@@ -26,40 +27,6 @@ const styles = StyleSheet.create({
     marginRight: 0,
     paddingLeft: 4,
     color: 'rgba(0,0,0,0.9)'
-  },
-  actions: {
-    flex: 1
-  },
-  actionsRow: {
-    flex: 1,
-    flexDirection: 'row'
-  },
-  buttonViewLeft: {
-    flex: 1,
-    marginRight: 8
-  },
-  buttonViewRight: {
-    flex: 1,
-    marginLeft: 8
-  },
-  buttonView: {
-    marginBottom: 4,
-    marginTop: 12
-  },
-  buttonContainer: {
-    marginTop: 0,
-    marginBottom: 0,
-    marginLeft: 0,
-    marginRight: 0
-  },
-  button: {
-    marginTop: 0,
-    marginBottom: 0,
-    marginLeft: 0,
-    marginRight: 0
-  },
-  buttonText: {
-    letterSpacing: 0.5
   }
 });
 
@@ -94,6 +61,13 @@ export default class PersonModal extends React.Component {
   render() {
     const { visible, close, title, deletePerson } = this.props;
     const { nameInput, errorMessage, saveDisabled } = this.state;
+    const buttons = [
+      { title: 'SAVE', onPress: this._save, type: 'primary', disabled: saveDisabled },
+      { title: 'CANCEL', onPress: close, type: 'default' }
+    ];
+    if (deletePerson) {
+      buttons.splice(1, 0, { title: 'DELETE', onPress: deletePerson, type: 'danger' });
+    }
     return (
       <Modal
         animationType="slide"
@@ -119,51 +93,7 @@ export default class PersonModal extends React.Component {
             underlineColorAndroid={Colors.tintColor}
           />
           <FormValidationMessage>{errorMessage}</FormValidationMessage>
-          <View style={!deletePerson ? styles.actionsRow : styles.actions}>
-            <View style={!deletePerson ? styles.buttonViewLeft : styles.buttonView}>
-              <Button
-                onPress={this._save}
-                disabled={saveDisabled}
-                title="SAVE"
-                backgroundColor={Colors.tintColor}
-                borderRadius={2}
-                buttonStyle={styles.button}
-                containerViewStyle={styles.buttonContainer}
-                fontSize={14}
-                fontWeight="500"
-                textStyle={styles.buttonText}
-              />
-            </View>
-            {!!deletePerson && (
-              <View style={styles.buttonView}>
-                <Button
-                  onPress={deletePerson}
-                  title="DELETE"
-                  backgroundColor="rgb(225, 0, 80)"
-                  borderRadius={2}
-                  buttonStyle={styles.button}
-                  containerViewStyle={styles.buttonContainer}
-                  fontSize={14}
-                  fontWeight="500"
-                  textStyle={styles.buttonText}
-                />
-              </View>
-            )}
-            <View style={!deletePerson ? styles.buttonViewRight : styles.buttonView}>
-              <Button
-                onPress={close}
-                title="CANCEL"
-                backgroundColor="#e0e0e0"
-                color="rgba(0, 0, 0, 0.87)"
-                borderRadius={2}
-                buttonStyle={styles.button}
-                containerViewStyle={styles.buttonContainer}
-                fontSize={14}
-                fontWeight="500"
-                textStyle={styles.buttonText}
-              />
-            </View>
-          </View>
+          <ButtonGroup buttons={buttons} />
         </View>
       </Modal>
     );

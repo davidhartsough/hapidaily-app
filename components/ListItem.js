@@ -13,8 +13,8 @@ const styles = StyleSheet.create({
 
 export default class ListItem extends React.PureComponent {
   _onPress = () => {
-    const { onPressItem, id } = this.props;
-    onPressItem(id);
+    const { onPressItem, item } = this.props;
+    onPressItem(item);
   };
 
   render() {

@@ -65,4 +65,9 @@ export const receivePeople = people => ({
   people
 });
 
+export const importPeople = people => ({
+  type: 'IMPORT_PEOPLE',
+  people
+});
+
 export const fetchPeople = () => dispatch => store.get('people').then(people => dispatch(receivePeople(people)));

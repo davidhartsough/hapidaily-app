@@ -5,6 +5,9 @@ export default (state = [], action) => {
   switch (action.type) {
     case 'RECEIVE_PEOPLE':
       return action.people;
+    case 'IMPORT_PEOPLE':
+      store.save('people', action.people);
+      return action.people;
     case 'CREATE_PERSON':
       people.push(action.name);
       store.push('people', action.name);

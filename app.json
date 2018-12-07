@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "newguy",
-    "description": "A very interesting project.",
-    "slug": "newguy",
+    "name": "HapiDaily",
+    "description": "Have a positive impact daily.",
+    "slug": "hapidaily",
     "privacy": "public",
     "sdkVersion": "31.0.0",
     "platforms": ["ios", "android"],
@@ -17,9 +17,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     }
