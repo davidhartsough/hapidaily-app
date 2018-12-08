@@ -35,8 +35,7 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 16,
-    marginBottom: 8,
-    textAlign: 'center'
+    marginBottom: 8
   },
   smallcaps: {
     fontVariant: ['small-caps']

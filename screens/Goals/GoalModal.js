@@ -1,7 +1,9 @@
 import React from 'react';
 import { StyleSheet, View, Modal } from 'react-native';
-import ButtonGroup from '../../components/ButtonGroup';
 import Selection from '../../components/Selection';
+import IconButtonGroup from '../../components/IconButtonGroup';
+
+const getRandomItem = array => array[Math.floor(Math.random() * array.length)];
 
 const shuffleArray = array => {
   const shuffledArray = [...array];
@@ -53,6 +55,14 @@ export default class GoalModal extends React.Component {
     this.setState({ person });
   };
 
+  _randomize = () => {
+    const { goalList, people } = this.props;
+    this.setState({
+      goal: getRandomItem(goalList),
+      person: getRandomItem(people)
+    });
+  };
+
   render() {
     const { visible, close, people } = this.props;
     const { goal, person, goals } = this.state;
@@ -74,10 +84,11 @@ export default class GoalModal extends React.Component {
               currentSelection={person}
             />
           </View>
-          <ButtonGroup
+          <IconButtonGroup
             buttons={[
-              { title: 'SAVE', onPress: this._save, type: 'primary' },
-              { title: 'CANCEL', onPress: close, type: 'default' }
+              { name: 'checkmark', color: 'primary', onPress: this._save },
+              { name: 'shuffle', color: 'iconDefault', onPress: this._randomize },
+              { name: 'close', color: 'iconDefault', onPress: close }
             ]}
           />
         </View>

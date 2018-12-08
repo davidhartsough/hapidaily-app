@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Modal, Text } from 'react-native';
 import { FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
-import ButtonGroup from '../../components/ButtonGroup';
+import IconButtonGroup from '../../components/IconButtonGroup';
 import Colors from '../../constants/Colors';
 
 const styles = StyleSheet.create({
@@ -27,6 +27,10 @@ const styles = StyleSheet.create({
     marginRight: 0,
     paddingLeft: 4,
     color: 'rgba(0,0,0,0.9)'
+  },
+  validation: {
+    marginLeft: -16,
+    marginBottom: 16
   }
 });
 
@@ -62,11 +66,11 @@ export default class PersonModal extends React.Component {
     const { visible, close, title, deletePerson } = this.props;
     const { nameInput, errorMessage, saveDisabled } = this.state;
     const buttons = [
-      { title: 'SAVE', onPress: this._save, type: 'primary', disabled: saveDisabled },
-      { title: 'CANCEL', onPress: close, type: 'default' }
+      { name: 'checkmark', color: saveDisabled ? 'disabled' : 'primary', onPress: this._save },
+      { name: 'close', color: 'iconDefault', onPress: close }
     ];
     if (deletePerson) {
-      buttons.splice(1, 0, { title: 'DELETE', onPress: deletePerson, type: 'danger' });
+      buttons.splice(1, 0, { name: 'trash', color: 'danger', onPress: deletePerson });
     }
     return (
       <Modal
@@ -92,8 +96,10 @@ export default class PersonModal extends React.Component {
             textContentType="name"
             underlineColorAndroid={Colors.tintColor}
           />
-          <FormValidationMessage>{errorMessage}</FormValidationMessage>
-          <ButtonGroup buttons={buttons} />
+          <FormValidationMessage containerStyle={styles.validation}>
+            {errorMessage}
+          </FormValidationMessage>
+          <IconButtonGroup buttons={buttons} />
         </View>
       </Modal>
     );
